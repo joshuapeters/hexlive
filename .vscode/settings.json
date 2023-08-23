@@ -1,0 +1,3 @@
+{
+  "rust-analyzer.linkedProjects": ["./hexlive-server/Cargo.toml"]
+}
