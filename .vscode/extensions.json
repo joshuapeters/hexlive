@@ -10,7 +10,8 @@
 		"pmneo.tsimporter",
 		"mikestead.dotenv",
 		"wix.vscode-import-cost",
-		"orta.vscode-jest"
+		"orta.vscode-jest",
+		"rvest.vs-code-prettier-eslint"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
