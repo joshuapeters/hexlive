@@ -6,6 +6,9 @@
 	],
 	"settings": {
 		"javascript.format.insertSpaceAfterConstructor": false,
-		"prettier.configPath": "./.prettierrc"
+		"prettier.configPath": "./.prettierrc",
+		"cSpell.words": [
+			"Parens"
+		]
 	}
 }
