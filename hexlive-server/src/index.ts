@@ -1,7 +1,9 @@
-import * as dotenv from "dotenv";
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
+/* eslint-disable no-console */
+import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import * as dotenv from 'dotenv';
+import { apiRouter } from './api/routes';
 
 dotenv.config();
 
@@ -17,10 +19,13 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use("/hello", async (req: Request, res: Response) => {
-  res.json({
-    message: "howdy!",
-  });
+// routing
+app.use('/api', apiRouter);
+
+// default error handling
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).render('error', { error: err });
 });
 
 app.listen(PORT, () => {
