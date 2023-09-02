@@ -1,18 +1,19 @@
-import Konva from "konva";
-import { useState } from "react";
-import { Layer, Rect, Stage } from "react-konva"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled from "styled-components";
+import { Grid } from "./components/konva/Grid";
+import { useState } from "react";
+import { Slider } from "./components/ui-elements/Slider";
 
 const ContentContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
-  position: relative;
+  flex-direction: column;
+  position: absolute;
   z-index: 1;
   padding: 1rem 2rem;
-  background-color: aliceblue;
+  background-color: grey;
   margin-left: 2rem;
   margin-top: 2rem;
+  border-radius: 5px;
 `;
 
 const CanvasContainer = styled.div`
@@ -21,49 +22,18 @@ const CanvasContainer = styled.div`
   position: relative;
 `;
 
-const StyledStage = styled(Stage)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: transparent;
-`;
-
-const ColoredRect = () => {
-  const [color, setColor] = useState('green');
-
-  const handleClick = () => {
-    setColor(Konva.Util.getRandomColor());
-  };
-
-  return (
-    <Rect
-      x={100}
-      y={100}
-      width={50}
-      height={50}
-      fill={color}
-      shadowBlur={5}
-      onClick={handleClick}
-      draggable
-    />
-  );
-};
-
 function App() {
+  const [scale, setScale] = useState(1);
+
   return (
-    <>
-      <CanvasContainer>
-        <StyledStage width={window.outerWidth} height={window.outerWidth}>
-          <Layer draggable>
-            <ColoredRect />
-          </Layer>
-        </StyledStage>
-      </CanvasContainer>
+    <CanvasContainer>
       <ContentContainer>
-        <p style={{ color: "black" }}>hello</p>
+        <p>Scale</p>
+        <Slider onValueChange={setScale} />
       </ContentContainer>
-    </>
-  )
+      <Grid cellSizePx={50} scale={scale} />
+    </CanvasContainer>
+  );
 }
 
-export default App
+export default App;

@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui --watch"
   },
   "dependencies": {
+    "@radix-ui/react-slider": "^1.1.2",
     "konva": "^9.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
