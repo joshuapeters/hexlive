@@ -46,7 +46,7 @@ export const Slider = ({ onValueChange }: SliderProps) => {
       defaultValue={[1]}
       max={1.5}
       min={0.5}
-      step={0.01}
+      step={0.001}
       onValueChange={(value: number[]) => onValueChange(value[0])}>
       <StyledTrack>
         <StyledRange />

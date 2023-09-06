@@ -1,8 +1,9 @@
-import { Layer, Line, Stage } from "react-konva";
+import { Layer, Line, Stage, Image } from "react-konva";
 import { useWindowResizeEffect } from "../../hooks/useWindowResizeEffect";
 import { useState } from "react";
 import { Token } from "./tokens/Token";
 import { useGridStore } from "./GridStore";
+import useImage from "use-image";
 
 // Creates a grid that is made up of cells of size cellSize that fits
 // the entire canvas
@@ -23,6 +24,11 @@ export const Grid = () => {
       height: window.innerHeight,
     });
   });
+
+  // TODO: save/load maps from server
+  const [image] = useImage(
+    "https://i.etsystatic.com/18388031/r/il/948be0/4031430605/il_1588xN.4031430605_4g2u.jpg"
+  );
 
   const horizontalLines = [];
   const verticalLines = [];
@@ -52,19 +58,24 @@ export const Grid = () => {
   const tokens = [
     <Token
       position={{
-        x: 10,
-        y: 10,
+        x: 20,
+        y: 20,
       }}
     />,
   ];
 
   return (
-    <Stage width={dimensions.width} height={dimensions.height}>
-      <Layer draggable>
+    <Stage
+      width={image?.width ?? dimensions.width}
+      height={image?.height ?? dimensions.height}>
+      <Layer>
+        <Image image={image} />
+      </Layer>
+      <Layer>
         {horizontalLines}
         {verticalLines}
-        {tokens}
       </Layer>
+      <Layer>{tokens}</Layer>
     </Stage>
   );
 };
