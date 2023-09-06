@@ -1,4 +1,6 @@
 import { Layer, Line, Stage } from "react-konva";
+import { useWindowResizeEffect } from "../../hooks/useWindowResizeEffect";
+import { useState } from "react";
 type GridProps = {
   cellSizePx: number;
   scale?: number;
@@ -7,6 +9,18 @@ type GridProps = {
 // Creates a grid that is made up of cells of size cellSize that fits
 // the entire canvas
 export const Grid = ({ cellSizePx, scale = 1 }: GridProps) => {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useWindowResizeEffect(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  });
+
   const horizontalLines = [];
   const verticalLines = [];
 
@@ -21,7 +35,9 @@ export const Grid = ({ cellSizePx, scale = 1 }: GridProps) => {
         strokeWidth={1}
       />
     );
+  }
 
+  for (let i = 0; i < window.innerHeight / cellSize; i++) {
     verticalLines.push(
       <Line
         key={i}
@@ -33,7 +49,7 @@ export const Grid = ({ cellSizePx, scale = 1 }: GridProps) => {
   }
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
+    <Stage width={dimensions.width} height={dimensions.height}>
       <Layer draggable>
         {horizontalLines}
         {verticalLines}
