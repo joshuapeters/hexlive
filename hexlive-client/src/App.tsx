@@ -1,9 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled from "styled-components";
-import { Grid } from "./components/konva/Grid";
-import { useState } from "react";
+import { Grid } from "./components/grid/Grid";
 import { Slider } from "./components/ui-elements/Slider";
-import { Circle, Layer } from "react-konva";
+import { useGridStore } from "./components/grid/GridStore";
 
 const ContentContainer = styled.div`
   display: flex;
@@ -24,7 +23,7 @@ const CanvasContainer = styled.div`
 `;
 
 function App() {
-  const [scale, setScale] = useState(1);
+  const setScale = useGridStore((state) => state.setScale);
 
   return (
     <CanvasContainer>
@@ -32,7 +31,7 @@ function App() {
         <p>Scale</p>
         <Slider onValueChange={setScale} />
       </ContentContainer>
-      <Grid cellSizePx={50} scale={scale} />
+      <Grid />
     </CanvasContainer>
   );
 }
