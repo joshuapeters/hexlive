@@ -1,6 +1,8 @@
 import { Layer, Line, Stage } from "react-konva";
 import { useWindowResizeEffect } from "../../hooks/useWindowResizeEffect";
 import { useState } from "react";
+import { Token } from "./Token";
+
 type GridProps = {
   cellSizePx: number;
   scale?: number;
@@ -48,11 +50,14 @@ export const Grid = ({ cellSizePx, scale = 1 }: GridProps) => {
     );
   }
 
+  const tokens = [<Token cellSize={cellSize} scale={scale} />];
+
   return (
     <Stage width={dimensions.width} height={dimensions.height}>
       <Layer draggable>
         {horizontalLines}
         {verticalLines}
+        {tokens}
       </Layer>
     </Stage>
   );

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Grid } from "./components/konva/Grid";
 import { useState } from "react";
 import { Slider } from "./components/ui-elements/Slider";
+import { Circle, Layer } from "react-konva";
 
 const ContentContainer = styled.div`
   display: flex;
