@@ -1,37 +1,40 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled from "styled-components";
 import { Grid } from "./components/grid/Grid";
-import { Slider } from "./components/ui-elements/Slider";
 import { useGridStore } from "./components/grid/GridStore";
+import { Card, Flex, Box, Text, Slider } from "@radix-ui/themes";
 
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  z-index: 1;
+const ContentContainer = styled(Flex)`
   padding: 1rem 2rem;
-  background-color: grey;
   margin-left: 2rem;
   margin-top: 2rem;
-  border-radius: 5px;
+  top: 0;
 `;
 
-const CanvasContainer = styled.div`
+const CanvasContainer = styled(Box)`
   width: 100%;
   height: 100%;
-  position: relative;
 `;
 
 function App() {
   const setScale = useGridStore((state) => state.setScale);
 
   return (
-    <CanvasContainer>
-      <ContentContainer>
-        <p>Scale</p>
-        <Slider onValueChange={setScale} />
-      </ContentContainer>
+    <CanvasContainer position="relative">
       <Grid />
+      <ContentContainer direction="column" position="absolute">
+        <Card size="2" style={{ width: 350 }}>
+          <Text weight="medium">Scale</Text>
+          <Slider
+            variant="soft"
+            defaultValue={[1]}
+            onValueChange={(value: number[]) => setScale(value[0])}
+            max={1.5}
+            min={0.5}
+            step={0.001}
+          />
+        </Card>
+      </ContentContainer>
     </CanvasContainer>
   );
 }

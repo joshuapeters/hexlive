@@ -1,6 +1,6 @@
 import { Layer, Line, Stage, Image } from "react-konva";
 import { useWindowResizeEffect } from "../../hooks/useWindowResizeEffect";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Token } from "./tokens/Token";
 import { useGridStore } from "./GridStore";
 import useImage from "use-image";
@@ -30,33 +30,54 @@ export const Grid = () => {
     "https://i.etsystatic.com/18388031/r/il/948be0/4031430605/il_1588xN.4031430605_4g2u.jpg"
   );
 
-  const horizontalLines = [];
-  const verticalLines = [];
+  const [horizontalLines, setHorizontalLines] = useState<JSX.Element[]>([]);
+  const [verticalLines, setVerticalLines] = useState<JSX.Element[]>([]);
 
-  for (let i = 0; i < window.innerWidth / cellSize; i++) {
-    horizontalLines.push(
-      <Line
-        key={i}
-        points={[i * cellSize, 0, i * cellSize, window.outerHeight]}
-        stroke="black"
-        strokeWidth={1}
-      />
-    );
-  }
+  const width = image?.width ?? dimensions.width;
+  const height = image?.height ?? dimensions.height;
 
-  for (let i = 0; i < window.innerHeight / cellSize; i++) {
-    verticalLines.push(
-      <Line
-        key={i}
-        points={[0, i * cellSize, window.outerWidth, i * cellSize]}
-        stroke="black"
-        strokeWidth={1}
-      />
-    );
-  }
+  console.log("image width", image?.width);
+  console.log("image height", image?.height);
+
+  console.log("dimensions width", dimensions.width);
+  console.log("dimensions height", dimensions.height);
+
+  console.log("width", width);
+  console.log("height", height);
+
+  useLayoutEffect(() => {
+    const yLines = [];
+    const xLines = [];
+
+    for (let i = 0; i < width / cellSize; i++) {
+      yLines.push(
+        <Line
+          key={i}
+          points={[i * cellSize, 0, i * cellSize, width]}
+          stroke="black"
+          strokeWidth={1}
+        />
+      );
+    }
+
+    for (let i = 0; i < height / cellSize; i++) {
+      xLines.push(
+        <Line
+          key={i}
+          points={[0, i * cellSize, width, i * cellSize]}
+          stroke="black"
+          strokeWidth={1}
+        />
+      );
+    }
+
+    setHorizontalLines(yLines);
+    setVerticalLines(xLines);
+  }, [cellSize, height, width]);
 
   const tokens = [
     <Token
+      key="token1"
       position={{
         x: 20,
         y: 20,
@@ -65,9 +86,7 @@ export const Grid = () => {
   ];
 
   return (
-    <Stage
-      width={image?.width ?? dimensions.width}
-      height={image?.height ?? dimensions.height}>
+    <Stage width={width} height={height}>
       <Layer>
         <Image image={image} />
       </Layer>
